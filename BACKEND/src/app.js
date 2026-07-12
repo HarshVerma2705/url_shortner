@@ -1,6 +1,7 @@
 import express from "express";
 import {nanoid} from "nanoid"
 import dotenv from "dotenv"
+import cors from "cors";
 
 import short_url from "./routes/short_url.route.js"
 import user_routes from "./routes/user.routes.js"
@@ -14,10 +15,10 @@ dotenv.config("./.env")
 
 const app = express();
 
-// app.use(cors({
-//     origin: 'http://localhost:5173', // your React app
-//     credentials: true // 👈 this allows cookies to be sent
-// }));
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173', // React app origin
+    credentials: true // allows cookies to be sent
+}));
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))

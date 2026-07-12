@@ -1,5 +1,6 @@
 
 export const errorHandler = (err,req,res,next) => {
+  console.error("API ERROR:", err);
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,

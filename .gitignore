@@ -72,16 +72,32 @@ web_modules/
 
 # dotenv environment variable files
 .env
-.env.development.local
-.env.test.local
-.env.production.local
 .env.local
-BACKEND/.env
-FRONTEND/.env
+.env.*
+!.env.example
+*.env
+**/.env
+**/.env.*
+**/.env.local
+
+# Build and distribution directories
+dist/
+build/
+dist-ssr/
+**/dist/
+**/build/
+**/dist-ssr/
+out/
+**/out/
+
+# Local configuration files
+**/*.local
 
 # parcel-cache
 .cache
 .parcel-cache
+**/.cache
+**/.parcel-cache
 
 # Next.js build output
 .next/
@@ -120,3 +136,8 @@ pouchdb
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Documentation and API testing
+API.md
+*postman*.json
+URL_Shortener.postman_collection.json

@@ -22,5 +22,9 @@ export const redirectFromShortUrl = wrapAsync(async (req,res)=>{
     const {id} = req.params
     const url = await getShortUrl(id)
     if(!url) throw new NotFoundError("Short URL not found")
-    res.redirect(url.full_url)
+    let targetUrl = url.full_url
+    if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+        targetUrl = 'http://' + targetUrl
+    }
+    res.redirect(targetUrl)
 })

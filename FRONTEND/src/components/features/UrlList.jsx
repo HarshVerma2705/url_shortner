@@ -1,27 +1,26 @@
-const formatShortUrl = (shortUrl) => {
-  if (!shortUrl) return '';
-  if (shortUrl.startsWith('http://') || shortUrl.startsWith('https://')) {
-    return shortUrl;
-  }
-  return `http://localhost:3000/${shortUrl}`;
-};
+import { UrlCard } from './UrlCard';
+import { Link2 } from 'lucide-react';
 
 export const UrlList = ({ urls }) => {
-  if (!urls || !urls.length) return <p>No URLs yet.</p>;
+  if (!urls?.length) {
+    return (
+      <div className="text-center py-16">
+        <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <Link2 className="w-8 h-8 text-slate-300" />
+        </div>
+        <h3 className="text-lg font-medium text-slate-900">No URLs yet</h3>
+        <p className="text-slate-500 mt-1">Shorten your first link above</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="url-list">
-      {urls.map((url) => {
-        const fullShortUrl = formatShortUrl(url.short_url);
-        const originalTarget = url.full_url?.startsWith('http') ? url.full_url : `http://${url.full_url}`;
-        return (
-          <div key={url._id || url.short_url} className="url-card">
-            <p><strong>Short:</strong> <a href={fullShortUrl} target="_blank" rel="noreferrer">{fullShortUrl}</a></p>
-            <p><strong>Original:</strong> <a href={originalTarget} target="_blank" rel="noreferrer">{url.full_url}</a></p>
-            <p><strong>Clicks:</strong> {url.clicks || 0}</p>
-          </div>
-        );
-      })}
+    <div className="grid gap-4 animate-fade-in">
+      {urls.map((url, index) => (
+        <div key={url._id || url.short_url || index} className="animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
+          <UrlCard url={url} />
+        </div>
+      ))}
     </div>
   );
 };

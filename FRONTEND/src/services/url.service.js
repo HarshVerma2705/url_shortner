@@ -1,9 +1,13 @@
 import apiClient from './api.client';
 
 export const urlService = {
-  createShortUrl: (url, slug) => 
-    apiClient.post('/api/create/', { url, slug }),
+    createShortUrl: async (url, slug) => {
+        const response = await apiClient.post('/api/create/', { url, slug });
+        return response.data;
+    },
 
-  getMyUrls: () => 
-    apiClient.get('/api/user/urls'),
+    getMyUrls: async () => {
+        const response = await apiClient.get('/api/user/urls');
+        return response.data;
+    },
 };

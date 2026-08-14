@@ -35,7 +35,7 @@ export const Navbar = () => {
               </Link>
               <div className="flex items-center gap-2 px-4 py-2 text-sm text-slate-500">
                 <User className="w-4 h-4" />
-                <span className="max-w-[100px] truncate">{user?.name}</span>
+                <span className="max-w-25 truncate">{user?.name}</span>
               </div>
               <button
                 onClick={handleLogout}

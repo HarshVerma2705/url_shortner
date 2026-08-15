@@ -8,13 +8,15 @@ export const createShortUrl = wrapAsync(async (req,res)=>{
     if(!data || !data.url) {
         throw new BadRequestError("URL is required")
     }
-    let shortUrl
+    let urlDoc
     if(req.user){
-        shortUrl = await createShortUrlWithUser(data.url,req.user._id,data.slug)
+        urlDoc = await createShortUrlWithUser(data.url,req.user._id,data.slug)
     }else{  
-        shortUrl = await createShortUrlWithoutUser(data.url)
+        urlDoc = await createShortUrlWithoutUser(data.url)
     }
-    res.status(200).json({shortUrl : process.env.APP_URL + shortUrl})
+    const appUrl = process.env.APP_URL || 'http://localhost:3000/'
+    const fullShortUrl = appUrl.endsWith('/') ? appUrl + urlDoc.short_url : appUrl + '/' + urlDoc.short_url
+    res.status(200).json({ _id: urlDoc._id, shortUrl: fullShortUrl, url: { ...urlDoc.toObject(), short_url: fullShortUrl } })
 })
 
 

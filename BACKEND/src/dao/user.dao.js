@@ -22,3 +22,7 @@ export const createUser = async (name, email, password) => {
 export const getAllUserUrlsDao = async (id) => {
     return await UrlModel.find({user:id})
 }
+
+export const deleteUserUrlDao = async (urlId, userId) => {
+    return await UrlModel.findOneAndDelete({_id: urlId, user: userId})
+}

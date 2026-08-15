@@ -6,8 +6,8 @@ import { BadRequestError, ConflictError } from "../utils/errorHandler.js"
 export const createShortUrlWithoutUser = async (url) => {
     const shortUrl = generateNanoId(7)
     if(!shortUrl) throw new BadRequestError("Short URL not generated")
-    await saveShortUrl(shortUrl,url)
-    return shortUrl
+    const savedUrl = await saveShortUrl(shortUrl,url)
+    return savedUrl
 }
 
 export const createShortUrlWithUser = async (url,userId,slug=null) => {
@@ -17,6 +17,6 @@ export const createShortUrlWithUser = async (url,userId,slug=null) => {
         if(exists) throw new ConflictError("This custom url already exists")
     }
 
-    await saveShortUrl(shortUrl,url,userId)
-    return shortUrl
+    const savedUrl = await saveShortUrl(shortUrl,url,userId)
+    return savedUrl
 }

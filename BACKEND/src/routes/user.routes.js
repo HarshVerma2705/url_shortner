@@ -1,9 +1,10 @@
 import express from "express"
-import { getAllUserUrls } from "../controllers/user.controller.js"
+import { getAllUserUrls, deleteUserUrl } from "../controllers/user.controller.js"
 import { authMiddleware } from "../middleware/auth.middleware.js"
 
 const router = express.Router()
 
-router.get("/urls",authMiddleware, getAllUserUrls)
+router.get("/urls", authMiddleware, getAllUserUrls)
+router.delete("/urls/:id", authMiddleware, deleteUserUrl)
 
 export default router

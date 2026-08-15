@@ -1,13 +1,7 @@
 import apiClient from './api.client';
 
 export const urlService = {
-    createShortUrl: async (url, slug) => {
-        const response = await apiClient.post('/api/create/', { url, slug });
-        return response.data;
-    },
-
-    getMyUrls: async () => {
-        const response = await apiClient.get('/api/user/urls');
-        return response.data;
-    },
+    createShortUrl: (url, slug) => apiClient.post('/api/create/', { url, slug }),
+    getMyUrls: () => apiClient.get('/api/user/urls'),
+    deleteUrl: (id) => apiClient.delete(`/api/user/urls/${id}`),
 };

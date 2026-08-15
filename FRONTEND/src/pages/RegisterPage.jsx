@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import { useAuthActions } from '../hooks/useAuthActions';
-import { Link2, ArrowRight, UserPlus } from 'lucide-react';
+import { ArrowRight, UserPlus } from 'lucide-react';
 
 export const RegisterPage = () => {
   const [name, setName] = useState('');

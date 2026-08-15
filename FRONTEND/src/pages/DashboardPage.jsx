@@ -2,13 +2,11 @@ import { useEffect } from 'react';
 import { UrlList } from '../components/features/UrlList';
 import { useUrlActions } from '../hooks/useUrlActions';
 import { useUrlContext } from '../store/UrlContext';
-import { useAuth } from '../store/AuthContext';
 import { LayoutDashboard, Link2, MousePointerClick } from 'lucide-react';
 
 export const DashboardPage = () => {
   const { fetchMyUrls, isLoading } = useUrlActions();
   const { urls } = useUrlContext();
-  const { user } = useAuth();
 
   useEffect(() => {
     fetchMyUrls();

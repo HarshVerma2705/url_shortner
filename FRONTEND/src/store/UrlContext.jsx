@@ -15,8 +15,12 @@ export const UrlProvider = ({ children }) => {
     setUrls(urlList);
   };
 
+  const removeUrl = (id) => {
+    setUrls((prev) => prev.filter((u) => u._id !== id));
+  };
+
   return (
-    <UrlContext.Provider value={{ urls, recentUrl, addUrl, setUserUrls }}>
+    <UrlContext.Provider value={{ urls, recentUrl, addUrl, setUserUrls, removeUrl }}>
       {children}
     </UrlContext.Provider>
   );

@@ -3,7 +3,7 @@ import { useUrlContext } from '../store/UrlContext';
 import { urlService } from '../services/url.service';
 
 export const useUrlActions = () => {
-  const { addUrl, setUserUrls } = useUrlContext();
+  const { addUrl, setUserUrls, removeUrl } = useUrlContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -12,10 +12,17 @@ export const useUrlActions = () => {
     setError(null);
     try {
       const data = await urlService.createShortUrl(url, slug);
-      addUrl({ full_url: url, short_url: data.shortUrl, createdAt: new Date() });
+      const newUrlObj = {
+        _id: data?._id || data?.url?._id,
+        full_url: url,
+        short_url: data?.shortUrl || data?.url?.short_url,
+        clicks: 0,
+        createdAt: new Date(),
+      };
+      addUrl(newUrlObj);
       return data;
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Failed to shorten URL');
       throw err;
     } finally {
       setIsLoading(false);
@@ -30,10 +37,24 @@ export const useUrlActions = () => {
       return data.urls;
     } catch (err) {
       setError(err.message);
-} finally {
+    } finally {
       setIsLoading(false);
     }
   };
 
-  return { shortenUrl, fetchMyUrls, isLoading, error };
+  const deleteUrl = async (id) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      await urlService.deleteUrl(id);
+      removeUrl(id);
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { shortenUrl, fetchMyUrls, deleteUrl, isLoading, error };
 };

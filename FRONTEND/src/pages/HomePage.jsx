@@ -3,7 +3,7 @@ import { UrlForm } from '../components/features/UrlForm';
 import { UrlList } from '../components/features/UrlList';
 import { useUrlActions } from '../hooks/useUrlActions';
 import { useUrlContext } from '../store/UrlContext';
-import { Link2, ArrowRight, Zap, Shield, Globe } from 'lucide-react';
+import { ArrowRight, Zap, Shield, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const HomePage = () => {

@@ -1,13 +1,27 @@
 import { useState } from 'react';
-import { ExternalLink, Copy, Check, BarChart3 } from 'lucide-react';
+import { ExternalLink, Copy, Check, BarChart3, Trash2, Loader2 } from 'lucide-react';
+import { useUrlActions } from '../../hooks/useUrlActions';
 
 export const UrlCard = ({ url }) => {
   const [copied, setCopied] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { deleteUrl } = useUrlActions();
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(url.short_url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDelete = async () => {
+    if (!url._id || isDeleting) return;
+    setIsDeleting(true);
+    try {
+      await deleteUrl(url._id);
+    } catch (err) {
+      console.error('Failed to delete URL:', err);
+      setIsDeleting(false);
+    }
   };
 
   // Format date safely
@@ -35,17 +49,29 @@ export const UrlCard = ({ url }) => {
             {url.full_url}
           </p>
         </div>
-        <button
-          onClick={handleCopy}
-          className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
-            copied
-              ? 'bg-green-50 text-green-700'
-              : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
-          }`}
-        >
-          {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-          {copied ? 'Copied' : 'Copy'}
-        </button>
+        <div className="shrink-0 flex items-center gap-2">
+          <button
+            onClick={handleCopy}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer ${
+              copied
+                ? 'bg-green-50 text-green-700'
+                : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? 'Copied' : 'Copy'}
+          </button>
+          {url._id && (
+            <button
+              onClick={handleDelete}
+              disabled={isDeleting}
+              title="Delete link"
+              className="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-all duration-200 cursor-pointer disabled:opacity-50"
+            >
+              {isDeleting ? <Loader2 className="w-4 h-4 animate-spin text-slate-500" /> : <Trash2 className="w-4 h-4" />}
+            </button>
+          )}
+        </div>
       </div>
       
       <div className="mt-4 pt-4 border-t border-slate-50 flex items-center gap-4 text-sm text-slate-500">

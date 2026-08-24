@@ -74,11 +74,15 @@ web_modules/
 .env
 .env.local
 .env.*
-!.env.example
 *.env
 **/.env
 **/.env.*
 **/.env.local
+
+# Exceptions: allow .env.example files
+!.env.example
+!**/.env.example
+!*.env.example
 
 # Build and distribution directories
 dist/

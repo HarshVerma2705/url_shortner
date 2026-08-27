@@ -1,4 +1,4 @@
-# CodeRunner URL Shortener
+# URL Shortener
 
 A production-deployed full-stack URL shortener built with **React, Node.js, Express, and MongoDB**.
 
@@ -12,7 +12,7 @@ Create short, shareable links, optionally use custom slugs, authenticate with HT
 ## Features
 
 - Create short URLs from long URLs
-- Optional custom slugs for authenticated users
+- Optional custom slugs 
 - User registration and login
 - JWT-based authentication using HTTP-only cookies
 - Personal URL dashboard
